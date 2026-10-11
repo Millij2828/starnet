@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EVO Visual Testing</title><style>body{margin:0;background:#080e19;font-family:system-ui}body>div{max-width:1600px;margin:auto}</style></head><body>
+<div id="evo-reviewed-world">
+<style>
+#evo-reviewed-world{background:#080c14;color:#d7e6ef;font:14px system-ui,sans-serif;border-radius:16px;overflow:hidden}#evo-reviewed-world *{box-sizing:border-box}#evo-reviewed-world header{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #26303d;gap:12px}#evo-reviewed-world .eyebrow{font:11px monospace;letter-spacing:2px;color:#80a3b6}#evo-reviewed-world h3{margin:4px 0 0;font-size:18px;font-weight:500}#evo-reviewed-world button{background:#16202e;border:1px solid #344357;color:#dfeaf5;border-radius:7px;min-height:44px;padding:8px 13px;font:13px system-ui;cursor:pointer}#evo-reviewed-world button[aria-pressed=true]{background:#d4e8ed;color:#15212a}#evo-reviewed-world .controls{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;align-items:center}#evo-reviewed-world .controls span{font:12px monospace;color:#91a7ba;margin-left:auto}#evo-reviewed-world canvas{display:block;width:100%;height:480px;touch-action:none}#evo-reviewed-world footer{padding:12px 18px;color:#91a7ba;border-top:1px solid #26303d;font-size:12px}#evo-reviewed-world .purple{color:#bd97ff}@media(max-width:480px){#evo-reviewed-world canvas{height:395px}#evo-reviewed-world header{padding:12px}#evo-reviewed-world .controls{padding:10px}#evo-reviewed-world .controls span{width:100%;margin:0}}
+#evo-reviewed-world select{background:#16202e;color:#dfeaf5;border:1px solid #344357;border-radius:7px;padding:10px;font:14px system-ui;min-height:44px;max-width:100%}#evo-reviewed-world .controls label{display:flex;gap:8px;align-items:center}#evo-reviewed-world header{flex-wrap:wrap}
+</style>
+<header class="command-top"><div><div class="eyebrow">EVO / COMMAND CENTER</div><h3>A living workspace.</h3></div><div class="top-actions"><span class="eyebrow">LOCAL SIMULATION</span><button type="button" id="expand-view">Full screen</button></div></header>
+<style>
+#evo-reviewed-world{border-radius:14px;background:#080e19;color:#e6eef5;font:14px/1.5 system-ui,sans-serif}
+#evo-reviewed-world>.command-top{padding:20px 24px;flex-wrap:wrap;background:#101a29;gap:18px}
+#evo-reviewed-world .command-top h3{font-size:22px;letter-spacing:-.5px}
+#evo-reviewed-world .command-top .eyebrow{color:#afbecf;font-size:11px}
+#evo-reviewed-world .top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#evo-reviewed-world .workspace{display:grid;grid-template-columns:280px minmax(0,1fr);align-items:stretch}
+#evo-reviewed-world .crew-panel{background:#101927;padding:22px 18px;border-right:1px solid #2b3749;min-width:0}
+#evo-reviewed-world .crew-heading{display:flex;justify-content:space-between;align-items:center;margin:0 0 18px;font-size:16px}
+#evo-reviewed-world .crew-heading small{font-size:12px;color:#a6b5c6;font-weight:400}
+#evo-reviewed-world .crew-list{display:grid;gap:12px}
+#evo-reviewed-world .crew-card{display:block;width:100%;padding:17px;text-align:left;background:#152132;border:1px solid #2c3b50;border-radius:12px;color:#e6eef5;min-height:126px;font-size:14px;line-height:1.45}
+#evo-reviewed-world .crew-card[aria-pressed=true]{background:#203449;border-color:#b2d2e0;color:#f3f8fb;box-shadow:inset 3px 0 #b2d2e0}
+#evo-reviewed-world .crew-card .identity{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+#evo-reviewed-world .avatar{display:grid;place-items:center;flex:0 0 36px;height:40px;border-radius:10px;background:#34435a;font-size:17px;color:#fff}
+#evo-reviewed-world .crew-card[data-agent="0"] .avatar{background:#733f68}
+#evo-reviewed-world .crew-card[data-agent="1"] .avatar{background:#59477e}
+#evo-reviewed-world .crew-card[data-agent="2"] .avatar,#evo-reviewed-world .crew-card[data-agent="3"] .avatar{background:#f1f0eb;color:#ad3047;border-bottom:5px solid #cb4359}
+#evo-reviewed-world .agent-name{display:block;font-size:15px;font-weight:500;letter-spacing:.4px}
+#evo-reviewed-world .agent-role{display:block;color:#b7c5d5;font-size:12px}
+#evo-reviewed-world .crew-meta{display:flex;justify-content:space-between;gap:6px;font-size:12px;color:#c1cfdd;flex-wrap:wrap}
+#evo-reviewed-world .agent-state{color:#9be8c7}
+#evo-reviewed-world .agent-task{display:block;color:#d0dbe5;margin-top:8px;font-size:13px;min-height:38px}
+#evo-reviewed-world .crew-help{margin:18px 0 0;color:#a8bbce;font-size:12px}
+#evo-reviewed-world .world-panel{min-width:0;background:#060c17}
+#evo-reviewed-world .controls{padding:16px;gap:10px;border-bottom:1px solid #263345;background:#0e1725}
+#evo-reviewed-world .controls label{font-size:12px;color:#b4c4d4}
+#evo-reviewed-world .world-panel canvas{height:620px;width:100%;touch-action:manipulation}
+#evo-reviewed-world .scene-caption{padding:16px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#101b2b;border-top:1px solid #28374a}
+#evo-reviewed-world .scene-caption strong{display:block;font-weight:500;font-size:15px}
+#evo-reviewed-world .scene-caption small{display:block;color:#adbed0;font-size:12px;margin-top:4px}
+#evo-reviewed-world .scene-caption button{background:#d3e6ed;color:#14212e;font-weight:500}
+#evo-reviewed-world #status{padding:12px 20px;display:block;color:#b7c9d9;min-height:43px;font-size:12px;border-top:1px solid #263345}
+#evo-reviewed-world .life-strip{background:#0d1624;padding:14px 22px;color:#a7bdca;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#evo-reviewed-world.expanded .world-panel canvas{height:850px}
+#evo-reviewed-world:fullscreen{width:100%;height:100%;border-radius:0;overflow:auto}
+#evo-reviewed-world:fullscreen .world-panel canvas{height:calc(100vh - 285px);min-height:420px}
+#evo-reviewed-world button:focus-visible,#evo-reviewed-world select:focus-visible{outline:3px solid #cae8f4;outline-offset:3px}
+@media(max-width:700px){#evo-reviewed-world .workspace{grid-template-columns:1fr}#evo-reviewed-world .crew-panel{border-right:0;border-bottom:1px solid #2b3749;padding:16px}#evo-reviewed-world .crew-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#evo-reviewed-world .crew-card{padding:12px;min-height:145px}#evo-reviewed-world .crew-card .identity{gap:8px}#evo-reviewed-world .crew-card .avatar{flex-basis:28px;height:34px}#evo-reviewed-world .agent-role{font-size:11px}#evo-reviewed-world .agent-task{font-size:12px}#evo-reviewed-world .crew-heading{margin-bottom:12px}#evo-reviewed-world .crew-help{margin-top:10px}#evo-reviewed-world .world-panel canvas{height:460px}#evo-reviewed-world>.command-top{padding:16px}#evo-reviewed-world .command-top h3{font-size:20px}#evo-reviewed-world:fullscreen .world-panel canvas{height:500px}}
+@media(prefers-reduced-motion:reduce){#evo-reviewed-world *{scroll-behavior:auto}}
+</style>
+<div class="workspace">
+<aside class="crew-panel" aria-label="Crew dashboard">
+<div class="crew-heading">Your crew <small>4 agents</small></div>
+<div class="crew-list">
+<button type="button" class="crew-card" data-agent="0" aria-pressed="true"><span class="identity"><span class="avatar">N</span><span><span class="agent-name">NOVA</span><span class="agent-role">Founder · coordination</span></span></span><span class="crew-meta"><span class="agent-state">Idle</span><span class="agent-room">Headquarters</span></span><span class="agent-task">Observing the station</span></button>
+<button type="button" class="crew-card" data-agent="1" aria-pressed="false"><span class="identity"><span class="avatar">J</span><span><span class="agent-name">JEVA</span><span class="agent-role">Assistant · discovery</span></span></span><span class="crew-meta"><span class="agent-state">Idle</span><span class="agent-room">Headquarters</span></span><span class="agent-task">Observing the station</span></button>
+<button type="button" class="crew-card" data-agent="2" aria-pressed="false"><span class="identity"><span class="avatar">M</span><span><span class="agent-name">MIRA</span><span class="agent-role">Scientist · samples</span></span></span><span class="crew-meta"><span class="agent-state">Idle</span><span class="agent-room">Laboratory</span></span><span class="agent-task">Preparing laboratory samples</span></button>
+<button type="button" class="crew-card" data-agent="3" aria-pressed="false"><span class="identity"><span class="avatar">R</span><span><span class="agent-name">REN</span><span class="agent-role">Technician · equipment</span></span></span><span class="crew-meta"><span class="agent-state">Idle</span><span class="agent-room">Laboratory</span></span><span class="agent-task">Calibrating instruments</span></button>
+</div><p class="crew-help">Select a crew member to follow them. Their task and location update as they move.</p>
+</aside><section class="world-panel" aria-label="Live station"><style>
+#evo-reviewed-world .group-command{padding:20px;background:#142237;border-bottom:1px solid #35485f}
+#evo-reviewed-world .group-command label{display:block;margin-bottom:8px;font-weight:500}
+#evo-reviewed-world .group-command textarea{display:block;width:100%;min-height:76px;padding:12px;background:#091421;border:1px solid #52687e;border-radius:9px;color:#edf5fc;font:16px/1.5 system-ui;resize:vertical}
+#evo-reviewed-world .command-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+#evo-reviewed-world .command-actions button{background:#d3e6ed;color:#14212e}
+#evo-reviewed-world .command-help{font-size:12px;color:#b4c7d8;margin:10px 0}
+#evo-reviewed-world #group-feedback{color:#dcebf5;font-size:13px;overflow-wrap:anywhere}
+#evo-reviewed-world #group-assignments{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0;list-style:none;font-size:12px;color:#c1d2e1;margin:12px 0 0}
+#evo-reviewed-world #group-assignments li{padding:8px 0;border-top:1px solid #35485f;overflow-wrap:anywhere}
+@media(max-width:480px){#evo-reviewed-world #group-assignments{grid-template-columns:1fr}}
+</style>
+<form id="group-command" class="group-command">
+<label for="crew-instruction">Tell your crew what to do</label>
+<textarea id="crew-instruction" maxlength="500" required placeholder="Research a new sample and prepare a team briefing."></textarea>
+<div class="command-actions"><select id="group-template" aria-label="Mission type"><option value="auto">Match supported command</option><option value="research">Research mission</option><option value="lab">Laboratory test</option><option value="brief">Team briefing</option></select><button type="submit">Send to crew</button><button type="button" id="cancel-mission" disabled>Cancel mission</button></div>
+<p class="command-help">Simulation: supports research, laboratory tests and team briefings. Your text is the mission brief; a preset assigns each role. Free-form AI execution is not connected.</p>
+<div id="group-feedback" role="status" aria-live="polite">The crew will finish current activities before starting. Training requirements still apply.</div>
+<div id="mission-summary" role="status" aria-live="polite"></div><ul id="group-assignments" aria-label="Crew assignments"></ul>
+</form>
+<div class="controls"><button id="walk">Walk circuit</button><button id="pause">Pause</button><label>View <select id="room-view" aria-label="Room camera"><option value="overview">All rooms</option><option value="hq">Headquarters</option><option value="war">War Room</option><option value="research">Research</option><option value="lab">Laboratory</option><option value="follow" selected>Follow selected agent</option></select></label><button id="zoom" aria-pressed="false">Closer view</button></div>
+<canvas aria-label="Nova, Jeva and two laboratory staff in white coats with red trim in four roofless rooms with animated portals: Headquarters, War Room, Research and Laboratory, each with a different floor shape. Choose a room view or select an agent to talk."></canvas>
+<div class="controls" aria-label="Selected agent abilities"><label>Pace <select id="agent-pace"><option value="auto">Auto</option><option value="walk">Walk</option><option value="run">Run</option></select></label><label>Ability <select id="agent-ability"></select></label><button type="button" id="use-ability">Queue ability</button><span id="ability-result" aria-live="polite">Simulated abilities · finish current activity first</span></div>
+<div class="scene-caption"><div><strong id="selected-name">NOVA · Idle</strong><small id="selected-task">Headquarters</small></div><div id="conversation-action"></div></div><span id="status" aria-live="polite">Following Nova</span></section>
+</div>
+
+
+<style>
+#evo-reviewed-world dialog{color:#e2edf4;background:#101b2b;border:1px solid #4e627b;border-radius:15px;width:min(460px,calc(100% - 28px));padding:20px;max-height:80vh;box-shadow:0 25px 100px #0009}#evo-reviewed-world dialog::backdrop{background:#01071399}#evo-reviewed-world dialog header{padding:0 0 12px}#evo-reviewed-world dialog p{font-size:13px;color:#9cafc0}#evo-reviewed-world .thread{max-height:230px;overflow:auto;margin:14px 0;display:grid;gap:10px}#evo-reviewed-world .message{padding:10px 12px;background:#1c2c42;border-radius:10px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px}#evo-reviewed-world .message.user{background:#303550}#evo-reviewed-world dialog textarea{width:100%;background:#091321;color:#e2edf4;border:1px solid #475a70;border-radius:8px;padding:12px;font:16px system-ui;resize:vertical;margin:8px 0}#evo-reviewed-world .dialog-actions{display:flex;gap:8px;flex-wrap:wrap}#evo-reviewed-world .life-strip{padding:10px 16px;background:#122335;color:#bcd4de;font:12px system-ui}
+</style>
+<div class="life-strip">Demo activity · moving dots: planning · book: studying · tablet: working · green ring: completed</div>
+<dialog id="agent-dialog" aria-labelledby="dialog-name">
+ <header><h3 id="dialog-name">Ask Nova</h3><button type="button" id="close-dialog" aria-label="Close conversation">Close</button></header>
+ <p>Ask about their activity, next step, role or graduation. Agents continue their routines while you chat.</p>
+ <div id="conversation" class="thread" role="log" aria-live="polite"></div>
+ <form id="question-form"><label for="agent-question">Your question</label><textarea id="agent-question" rows="2" maxlength="400" placeholder="What are you working on?" required></textarea><div class="dialog-actions"><button type="submit">Ask agent</button><button type="button" id="ask-status">What are you doing?</button></div></form>
+ <p>Prototype responses, not a connected AI model.</p>
+</dialog>
+
+<script>
+(()=>{
+const root=document.getElementById('evo-reviewed-world'),canvas=root.querySelector('canvas'),ctx=canvas.getContext('2d'),status=root.querySelector('#status');
+let W=800,H=480,S=1,selected=0,paused=false,close=false,last=0,view="follow";
+const agents=[{name:'NOVA',x:-130,y:50,angle:0,phase:0,speed:0,color:'#ea55aa',skin:'#b98164',path:[]},{name:'JEVA',x:140,y:90,angle:0,phase:2,speed:0,color:'#ae79ef',skin:'#b58a6e',path:[]}];
+agents.push({name:'MIRA',staff:true,role:'Laboratory scientist',x:-240,y:1600,angle:Math.PI,phase:0,speed:0,color:'#ef6570',skin:'#9b674b',path:[],graduated:true,labVisited:true},{name:'REN',staff:true,role:'Laboratory technician',x:240,y:1600,angle:Math.PI,phase:2,speed:0,color:'#ef6570',skin:'#dfb18c',path:[],graduated:true,labVisited:true});
+
+let cameraY=50,targetScale=1,dashboardTime=0;
+function resize(){W=canvas.clientWidth;H=canvas.clientHeight;const d=Math.min(devicePixelRatio||1,2);canvas.width=W*d;canvas.height=H*d;ctx.setTransform(d,0,0,d,0,0);targetScale=Math.min(W/810,H/(view==="overview"?1530:470))*(close?1.15:1);if(!last)S=targetScale}
+new ResizeObserver(resize).observe(canvas);
+function cameraStep(dt){const target=view==='follow'?agents[selected].y:({overview:800,hq:20,war:590,research:1140,lab:1690}[view]);const blend=reducedMotion?1:1-Math.exp(-dt*6);cameraY+=(target-cameraY)*blend;S+=(targetScale-S)*blend;}
+function p(x,y,z=0){return [W/2+x*S,H*.5+((y-cameraY)*.65-z*.76)*S]}
+
+function poly(points,fill,stroke){ctx.beginPath();points.forEach((v,i)=>{const a=p(...v);i?ctx.lineTo(...a):ctx.moveTo(...a)});ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=S;ctx.stroke()}}
+function line(a,b,color,width=1){ctx.beginPath();ctx.moveTo(...p(...a));ctx.lineTo(...p(...b));ctx.strokeStyle=color;ctx.lineWidth=width*S;ctx.lineCap='round';ctx.stroke()}
+function ellipse(x,y,z,rx,ry,color){let q=p(x,y,z);ctx.beginPath();ctx.ellipse(q[0],q[1],rx*S,ry*S,0,0,Math.PI*2);ctx.fillStyle=color;ctx.fill()}
+function box(x,y,w,d,h,top='#62727c',front='#293945',side='#344751',base=0){poly([[x,y,base],[x,y+d,base],[x,y+d,base+h],[x,y,base+h]],side);poly([[x,y+d,base],[x+w,y+d,base],[x+w,y+d,base+h],[x,y+d,base+h]],front);poly([[x,y,base+h],[x+w,y,base+h],[x+w,y+d,base+h],[x,y+d,base+h]],top,'#8496a355')}
+function text(t,x,y,z,color='#8098a8',size=11){let q=p(x,y,z);ctx.font=`${Math.max(10,size*S)}px monospace`;ctx.fillStyle=color;ctx.textAlign='center';ctx.fillText(t,...q)}
+const stars=Array.from({length:370},(_,i)=>{const rand=n=>{const v=Math.sin(n*127.1+311.7)*43758.5453;return v-Math.floor(v)};return [rand(i+1),rand(i+802),rand(i+345)]});
+function galaxy(){ctx.fillStyle='#050611';ctx.fillRect(0,0,W,H);for(const [x,y,r,color] of [[.13,.36,.55,'#4a206d'],[.8,.6,.55,'#122c64'],[.45,.85,.4,'#36214c']]){const g=ctx.createRadialGradient(W*x,H*y,0,W*x,H*y,W*r);g.addColorStop(0,color);g.addColorStop(1,'#05061100');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}for(const [x,y,b] of stars){ctx.globalAlpha=.25+b*.75;ctx.fillStyle=b>.8?'#cce7ff':'#e0d2f5';ctx.beginPath();ctx.arc(x*W,y*H,.4+b*1.05,0,Math.PI*2);ctx.fill();if(b>.98){ctx.fillRect(x*W-3,y*H-.35,6,.7);ctx.fillRect(x*W-.35,y*H-3,.7,6)}}ctx.globalAlpha=1}
+
+const roomShapes={
+ hq:[[-350,-210],[350,-210],[350,150],[270,245],[-270,245],[-350,150]],
+ war:[[-240,370],[240,370],[365,570],[240,790],[-240,790],[-365,570]],
+ research:[[-240,900],[240,900],[365,1020],[365,1230],[240,1350],[-240,1350],[-365,1230],[-365,1020]],
+ lab:[]
+};
+for(let i=0;i<=20;i++){const t=-Math.PI/2+i*Math.PI/20;roomShapes.lab.push([235+110*Math.cos(t),1675+235*Math.sin(t)])}
+for(let i=0;i<=20;i++){const t=Math.PI/2+i*Math.PI/20;roomShapes.lab.push([-235+110*Math.cos(t),1675+235*Math.sin(t)])}
+function insideRoom(x,y,points,margin=0){
+ for(let i=0;i<points.length;i++){const a=points[i],b=points[(i+1)%points.length],dx=b[0]-a[0],dy=b[1]-a[1];if(dx*(y-a[1])-dy*(x-a[0])<margin*Math.hypot(dx,dy))return false}return true;
+}
+function roomShell(key,accent,floor){
+ const points=roomShapes[key],minY=Math.min(...points.map(q=>q[1])),maxY=Math.max(...points.map(q=>q[1])),center=(minY+maxY)/2;
+ poly(points.map(q=>[...q,-18]),'#101c29');
+ for(let i=0;i<points.length;i++){const a=points[i],b=points[(i+1)%points.length];poly([[...a,-18],[...b,-18],[...b,0],[...a,0]],'#1b2c39','#536470')}
+ poly(points.map(q=>[...q,0]),floor,'#7b919e');
+ ctx.save();ctx.beginPath();points.forEach((q,i)=>{const v=p(...q);i?ctx.lineTo(...v):ctx.moveTo(...v)});ctx.closePath();ctx.clip();
+ for(let y=minY;y<=maxY;y+=28)line([-380,y,.3],[380,y,.3],'#647a8540',1);
+ for(let x=-360;x<=360;x+=46)line([x,minY,.3],[x,maxY,.3],'#647a8530',1);
+ ctx.restore();
+ for(let i=0;i<points.length;i++){
+  const a=points[i],b=points[(i+1)%points.length],back=(a[1]+b[1])/2<center-45,h=back?58:14;
+  poly([[...a,0],[...b,0],[...b,h],[...a,h]],back?'#2d414e':'#465b68','#71858f');
+  line([...a,h],[...b,h],back?accent:'#9eafb7',3);
+  if(back){const len=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.max(1,Math.ceil(len/55));for(let j=1;j<n;j++){const x=a[0]+(b[0]-a[0])*j/n,y=a[1]+(b[1]-a[1])*j/n;line([x,y,4],[x,y,h-5],'#7b919955',1)}}
+ }
+}
+
+function warRoom(){
+roomShell('war','#c6a1ff','#303443');text('WAR ROOM / HEXAGON',0,372,32,'#ded1f3',13);
+for(const x of [-200,200]){box(x-31,425,62,38,28,'#5c5870','#28283d');box(x-24,425,48,7,30,'#797088','#292338','#3a304e',28);poly([[x-20,433,35],[x+20,433,35],[x+20,433,54],[x-20,433,54]],'#57406e');line([x-15,434,46],[x+12,434,46],'#cba4ff',2)}
+
+}
+function strategyTable(){box(-108,490,216,110,30,'#51526a','#252c40','#303449');poly([[-97,499,31],[97,499,31],[97,589,31],[-97,589,31]],'#132d3e','#8ec7d9');for(let x=-80;x<95;x+=25)line([x,503,32],[x,585,32],'#315063',.7);for(let y=510;y<590;y+=20)line([-92,y,32],[92,y,32],'#315063',.7);for(const [x,y] of [[-62,525],[0,548],[66,523],[44,577]]){ellipse(x,y,34,5,3,'#aeafff');line([x,y,35],[x,y,52],'#ac87d4',2)}line([-62,525,34],[0,548,34],'#88cece',1);line([0,548,34],[66,523,34],'#88cece',1);text('TACTICAL MAP',0,578,33,'#cadbdf',10)}
+function portal(y,label){const q=p(0,y,42);ctx.save();ctx.shadowColor='#9a70ff';ctx.shadowBlur=19*S;ctx.beginPath();ctx.ellipse(q[0],q[1],30*S,39*S,0,0,Math.PI*2);const g=ctx.createRadialGradient(q[0],q[1],2*S,q[0],q[1],42*S);g.addColorStop(0,'#17264e');g.addColorStop(.7,'#584898bb');g.addColorStop(1,'#a8deff');ctx.fillStyle=g;ctx.fill();ctx.strokeStyle='#b9a2ff';ctx.lineWidth=4*S;ctx.stroke();ctx.shadowBlur=0;ctx.beginPath();ctx.ellipse(q[0],q[1],23*S,32*S,0,0,Math.PI*2);ctx.strokeStyle='#80d7ff';ctx.lineWidth=S;ctx.stroke();ctx.restore();ellipse(0,y,1,36,10,'#a384ff42');text(label,0,y+28,0,'#d5c3ff',10)}
+function researchRoom(){
+roomShell('research','#88ecdb','#283e44');text('RESEARCH / OCTAGON',0,902,32,'#c2f3eb',13);
+for(const x of [-240,240]){box(x-55,971,110,50,32,'#718789','#273e48');box(x-34,974,68,9,35,'#526b70','#233d43','#365059',32);poly([[x-29,984,40],[x+29,984,40],[x+29,984,61],[x-29,984,61]],'#17443f');for(let i=0;i<4;i++)line([x-22+i*12,985,44],[x-22+i*12,985,49+i*3],'#89e5c6',3);box(x-23,1002,46,12,3,'#afc4bc','#425753','#425753',32)}
+}
+function studyDesks(){for(const x of [-240,240]){box(x-35,1040,70,25,13,'#485b6c','#20343f');box(x-35,1060,70,6,27,'#5d7683','#344e5d');poly([[x-43,1002,36],[x-25,1000,36],[x-8,1003,36],[x-8,1017,36],[x-25,1014,36],[x-43,1017,36]],'#e3ddba');line([x-25,1001,37],[x-25,1014,37],'#8e957b',1);text(x<0?'STUDY DESK / NOVA':'STUDY DESK / JEVA',x,1030,31,'#b7eddf',11)}}
+
+function laboratory(){
+roomShell('lab','#f6c87f','#2b3a43');text('LABORATORY / CAPSULE',0,1442,32,'#ffe0a6',13);
+for(const x of [-235,235]){
+ box(x-60,1500,120,62,30,'#899b9a','#334b54');
+ box(x-47,1504,42,10,34,'#668084','#1b363e','#324e55',30);
+ poly([[x-43,1515,38],[x-9,1515,38],[x-9,1515,58],[x-43,1515,58]],'#123b39');
+ for(let i=0;i<3;i++)line([x-39,1516,43+i*5],[x-14+i*4,1516,43+i*5],'#82dfc5',2);
+ for(let i=0;i<3;i++){box(x+8+i*13,1528,8,10,18,'#a3eadc','#499eaa','#388187',30);ellipse(x+12+i*13,1533,49,4,2,'#edc78c')}
+ text(x<0?'SAMPLE PREP':'ANALYSIS',x,1562,31,'#efd5a6',10);
+}
+text('EXPERIMENT FLOOR',0,1845,1,'#b9cacc',11);
+}
+function experimentChamber(){
+ const workers=agents.filter(a=>a.y>=1460&&a.workTime>0),active=workers.length>0;
+ const phase=active?Math.max(...workers.map(a=>a.workPhase||0)):0;
+ box(-85,1630,170,120,18,'#4d626b','#273e48','#354a53');
+ ellipse(0,1680,20,62,27,'#192b36');ellipse(0,1680,21,49,21,active?'#61dbb855':'#d1aa6533');
+ for(const x of [-62,62]){box(x-5,1650,10,65,72,'#b6c7c9','#516b77','#67848b',18);line([x,1656,23],[x,1656,85],active?'#8cf0c6':'#f3cc87',3)}
+ poly([[-58,1715,22],[58,1715,22],[58,1715,88],[-58,1715,88]],'#8adee514','#7cabaf88');
+ const z=active&&!reducedMotion?52+Math.sin(phase*2)*6:52;
+ poly([[0,1680,z+17],[17,1680,z],[0,1695,z-14],[-17,1680,z]],active?'#8ae8c9':'#c6a8ef','#e8e6ff');
+ if(active){const scan=32+(reducedMotion?.5:(Math.sin(phase*2)+1)/2)*45;line([-52,1717,scan],[52,1717,scan],'#a6ffe2',2)}
+ text(active?['CALIBRATING','TESTING','REVIEWING'][Math.min(2,Math.floor(phase/3))]:'CHAMBER / READY',0,1750,23,active?'#a9f6d2':'#f5d59e',11);
+}
+
+function researchBench(x){box(x-60,1110,120,68,30,'#607f80','#26434a');box(x-40,1120,80,44,5,'#294e54','#17333c','#26444a',30);for(const offset of [-22,22]){box(x+offset-11,1127,22,26,38,'#a0f3d9','#5db6b477','#406a7788',35);line([x+offset,1140,40],[x+offset,1140,65],'#b3ffdc',3)}text('SAMPLE SCANNER',x,1172,32,'#c0e5dc',10)}
+
+const reducedMotion=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function portalEffects(a){
+ const tr=a.transit,t=tr.elapsed;
+ for(const arrival of [false,true]){
+  const u=arrival?(t-.9):t;if(u<0||u>1)continue;
+  const loc=arrival?tr.target:tr.source,q=p(loc[0],loc[1],42),power=Math.sin(Math.PI*Math.min(1,u));
+  ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=power*(reducedMotion?.25:.8);
+  const glow=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],78*S);glow.addColorStop(0,'#b4dcff');glow.addColorStop(.35,a.color+'bb');glow.addColorStop(1,a.color+'00');ctx.fillStyle=glow;ctx.fillRect(q[0]-78*S,q[1]-78*S,156*S,156*S);
+  if(!reducedMotion){
+   for(let ring=0;ring<3;ring++){const phase=(u+ring*.22)%1,radius=30+phase*34;ctx.globalAlpha=(1-phase)*power*.8;ctx.beginPath();ctx.ellipse(q[0],q[1],radius*S,(radius*1.22)*S,0,0,Math.PI*2);ctx.lineWidth=(2-ring*.4)*S;ctx.strokeStyle=ring===1?'#bfefff':a.color;ctx.stroke()}
+   for(let i=0;i<32;i++){const angle=i*2.399+t*3,spread=arrival?u:1-u,radius=10+spread*(30+(i%5)*6),px=q[0]+Math.cos(angle)*radius*S,py=q[1]+Math.sin(angle)*radius*1.2*S;ctx.globalAlpha=power*(.5+(i%3)*.2);ctx.fillStyle=i%3?'#d3f1ff':a.color;ctx.fillRect(px,py,(1.8+i%2)*S,(2+i%3)*S)}
+   // Scan streaks dissolve the departing silhouette and gather on arrival.
+   const foot=p(loc[0],loc[1],0);for(let i=0;i<9;i++){const z=8+i*7,drift=(arrival?1-u:u)*28;ctx.globalAlpha=power*.65;ctx.strokeStyle=i%2?a.color:'#ceeeff';ctx.lineWidth=2*S;ctx.beginPath();ctx.moveTo(foot[0]-12*S-drift*S,foot[1]-z*.76*S);ctx.lineTo(foot[0]+12*S+drift*S,foot[1]-z*.76*S);ctx.stroke()}
+  }
+  ctx.restore();
+ }
+}
+
+function scene(){ctx.clearRect(0,0,W,H);galaxy();
+roomShell('hq','#9cd7df','#243139');
+for(const x of [-242,0,242]){box(x-46,-152,92,55,30,'#4b5a65','#1a2834');box(x-28,-145,56,10,33,'#435563','#172735','#243541',30);poly([[x-23,-134,36],[x+23,-134,36],[x+23,-134,58],[x-23,-134,58]],x===0?'#56305d':'#153f4c');line([x-17,-133,45],[x+14,-133,45],x===0?'#f080bb':'#78d9d3',2);box(x-20,-113,40,13,3,'#899ca4','#334855','#334855',30);box(x-15,-74,30,28,18,'#506774','#253742');ellipse(x,-64,0,21,6,'#101922')}
+text('HEADQUARTERS / BEVELED',0,-209,32,'#c3d8de',12);
+
+warRoom();researchRoom();studyDesks();laboratory();
+const track=[[-260,-16],[260,-16],[260,160],[-260,160],[-260,-16]];for(let i=1;i<track.length;i++)line([...track[i-1],.5],[...track[i],.5],'#66785b',1);
+for(const [x,y] of track.slice(0,4)){ellipse(x,y,1,5,3,'#c3c28a')}
+for(const a of agents){if(a.path.length){ctx.setLineDash([4*S,7*S]);let prev=[a.x,a.y,1];for(const q of a.path){if(!q[2])line(prev,[q[0],q[1],1],a.color+'70',1);prev=[q[0],q[1],1]}ctx.setLineDash([])}}
+const objects=agents.map(a=>({y:a.y,draw:()=>{ctx.save();if(a.transit){const t=a.transit.elapsed;ctx.globalAlpha=t<.25?1:t<.85?Math.max(0,1-(t-.25)/.6):t<1.05?0:Math.min(1,(t-1.05)/.65);if(!reducedMotion){const q=p(a.x,a.y,32),squeeze=.2+.8*ctx.globalAlpha;ctx.translate(q[0],q[1]);ctx.scale(squeeze,1+.15*(1-ctx.globalAlpha));ctx.translate(-q[0],-q[1])}}character(a);activityMotion(a);ctx.restore()}}));objects.push({y:1521,draw:()=>portal(1520,'PORTAL / LAB')},{y:1750,draw:experimentChamber},{y:600,draw:strategyTable},{y:201,draw:()=>portal(200,'PORTAL / HQ')},{y:399,draw:()=>portal(400,'PORTAL / WAR')},{y:959,draw:()=>portal(960,agents[selected].graduated?'EXIT UNLOCKED':'GRADUATION REQUIRED')},{y:1178,draw:()=>researchBench(-210)},{y:1178,draw:()=>researchBench(210)});objects.sort((a,b)=>a.y-b.y).forEach(o=>o.draw());agents.filter(a=>a.transit).forEach(portalEffects);
+}
+function activityOf(a){
+ if(a.transit)return 'Portal transfer';
+ if(a.path.length)return a.speed>85?'Running':a.speed>.5?'Walking':'Turning';
+ if(a.completedFor>0)return a.completedKind||'Task complete';
+ if(a.studyRequested)return ['Reading','Practicing','Reviewing'][Math.min(2,Math.floor((a.studyTime||0)/4))];
+ if(a.workTime>0){if(a.activeAbility)return a.activeAbility.name;if(a.y>=1460)return ['Calibrating','Testing sample','Reviewing result'][Math.min(2,Math.floor((a.workPhase||0)/3))];return a.y<300?'Coordinating':a.y<850?'Planning strategy':'Comparing notes'}
+ return autonomous?'Choosing next task':'Idle';
+}
+function activityMotion(a){
+ if(a.transit)return;
+ const active=a.workTime>0&&!a.path.length,study=a.studyRequested&&!a.path.length,done=a.completedFor>0,thinking=!active&&!study&&!done&&!a.path.length&&autonomous;
+ const t=reducedMotion?0:(a.motionTime||0), q=p(a.x,a.y,0);
+ if(active||study||done){
+  const pulse=reducedMotion?1:.7+.3*Math.sin(t*2.2),color=done?'#8af2b8':study?'#b8a0f4':'#78c9f5';
+  ctx.save();ctx.globalAlpha=pulse*.75;ctx.strokeStyle=color;ctx.lineWidth=2*S;ctx.beginPath();ctx.ellipse(q[0],q[1],(done?30+(3-a.completedFor)*5:27)*S,10*S,0,0,Math.PI*2);ctx.stroke();ctx.restore();
+ }
+ // A held book or tablet makes study and work readable independently of color.
+ if(active||study){
+  const f=[Math.sin(a.angle),Math.cos(a.angle)],r=[f[1],-f[0]],loc=(side,forward,z)=>[a.x+r[0]*side+f[0]*forward,a.y+r[1]*side+f[1]*forward,z];
+  const z=36,ink=study?'#ede2be':'#a8eee3';
+  poly([loc(-13,12,z),loc(13,12,z),loc(13,23,z),loc(-13,23,z)],study?'#69577c':'#204a57','#a3b9c5');
+  poly([loc(-11,13,z+1),loc(-1,13,z+2),loc(-1,22,z+2),loc(-11,22,z+1)],ink);
+  poly([loc(1,13,z+2),loc(11,13,z+1),loc(11,22,z+1),loc(1,22,z+2)],ink);
+  if(study){const turn=(Math.sin(t*1.8)+1)/2;line(loc(0,13,z+3),loc(-10+20*turn,22,z+3+Math.sin(turn*Math.PI)*6),'#fff3da',2)}
+  else{for(let i=0;i<3;i++)line(loc(-8,15+i*2,z+3),loc(-3+((Math.floor(t*2)+i)%3)*5,15+i*2,z+3),'#238079',1)}
+ }
+ if(thinking){const at=p(a.x,a.y,80);ctx.save();for(let i=0;i<3;i++){ctx.fillStyle='#cbb6f3';ctx.beginPath();ctx.arc(at[0]+(i-1)*7,at[1]-(reducedMotion?0:Math.max(0,Math.sin(t*3-i*.8))*4),2.3,0,Math.PI*2);ctx.fill()}ctx.restore()}
+ // Selected character has one concise state label; other agents remain uncluttered.
+ if(agents[selected]===a){const at=p(a.x,a.y,103),label=paused?'Paused':activityOf(a);ctx.save();ctx.font='12px system-ui';const width=ctx.measureText(label).width+22,x=Math.max(6,Math.min(W-width-6,at[0]-width/2)),y=at[1]-20;ctx.fillStyle='#112333';ctx.beginPath();ctx.roundRect(x,y,width,26,7);ctx.fill();ctx.fillStyle=done?'#9cf5bc':'#e4eff7';ctx.textAlign='center';ctx.fillText(label,x+width/2,y+17);ctx.restore()}
+}
+
+function character(a){const f=[Math.sin(a.angle),Math.cos(a.angle)],r=[f[1],-f[0]],walking=a.speed>.5;
+const local=(side,forward,z)=>[a.x+r[0]*side+f[0]*forward,a.y+r[1]*side+f[1]*forward,z];
+ellipse(a.x,a.y,0,20,7,'#00000075');if(agents[selected]===a){let q=p(a.x,a.y,.3);ctx.beginPath();ctx.ellipse(...q,24*S,9*S,0,0,Math.PI*2);ctx.strokeStyle=a.color;ctx.lineWidth=1.3*S;ctx.stroke()}
+// Each foot has a planted half-cycle and a lifted return half-cycle.
+function foot(offset,side){const t=((a.phase/(2*Math.PI)+offset)%1+1)%1;let forward=0,lift=0;if(walking){if(t<.5){forward=12-48*t}else{const u=(t-.5)*2;forward=-12+24*u;lift=(a.speed>85?16:10)*Math.sin(Math.PI*u)}}return local(side,forward,2+lift)}
+const bob=walking?(a.speed>85?2.4:1.3)*Math.cos(a.phase*2):0;
+const hips=[local(-6,0,30+bob),local(6,0,30+bob)],feet=[foot(0,-6),foot(.5,6)];
+const order=f[0]>0?[0,1]:[1,0];for(const i of order){const hip=hips[i],ft=feet[i];const knee=[(hip[0]+ft[0])*.5+f[0]*3,(hip[1]+ft[1])*.5+f[1]*3,17+bob+Math.max(0,ft[2]-2)*.25];line(hip,knee,a.staff?'#ece8e0':i===0?'#283142':'#343e4d',9);line(knee,ft,a.staff?'#b5c5cd':i===0?'#323a4a':'#414c5d',7);const toe=[ft[0]+f[0]*7,ft[1]+f[1]*7,ft[2]];line(ft,toe,a.staff?'#b83248':'#c3cbd0',8);line([ft[0],ft[1],ft[2]+3],[toe[0],toe[1],toe[2]+3],'#364454',5)}
+// Opposing arm swing; the head remains independently stabilized.
+for(const side of [-1,1]){const swing=walking?Math.sin(a.phase)*side*(a.speed>85?14:9):a.workTime>0?3+Math.sin((a.workPhase||0)*6+side)*2:0;const shoulder=local(side*10,0,48+bob),elbow=local(side*13,(a.workTime>0||a.studyRequested)&&!walking?8:swing*.55,37+bob),hand=local(side*12,(a.workTime>0||a.studyRequested)&&!walking?18:swing,(a.workTime>0||a.studyRequested)&&!walking?38+(reducedMotion?0:Math.sin((a.motionTime||0)*5+side)*1.6):29+bob);line(shoulder,elbow,a.staff?'#f7f3eb':'#394453',7);line(elbow,hand,a.staff?'#e3e9ea':'#2b3544',6);if(a.staff)line(elbow,local(side*13,swing*.65,34+bob),'#ca3f51',7);ellipse(...hand,3,3,a.skin)}
+poly([local(-9,0,50+bob),local(9,0,50+bob),local(8,0,28+bob),local(-8,0,28+bob)],a.staff?'#f2f0e9':'#293443',a.staff?'#aebec6':'#637080');if(a.staff){poly([local(-8,0,34+bob),local(8,0,34+bob),local(12,0,21+bob),local(-12,0,21+bob)],'#e8edee','#aebec6');line(local(0,2,48+bob),local(0,2,24+bob),'#be354a',2);line(local(3,3,42+bob),local(7,3,42+bob),'#df4859',4)}line(local(-8,1,48+bob),local(-7,1,30+bob),a.color,2.5);line(local(8,1,48+bob),local(7,1,30+bob),a.color,2.5);line(local(-7,2,28+bob),local(7,2,28+bob),'#77818a',2);
+const head=local(0,0,59+bob*.18);ellipse(...head,10.5,11,'#292531');if(f[1]>-.35){const face=local(0,4,57+bob*.18);ellipse(...face,8.2,8.8,a.skin);const eye1=local(-3,9,60),eye2=local(3,9,60);ellipse(...eye1,1,1.1,'#1b1720');ellipse(...eye2,1,1.1,'#1b1720')}
+ellipse(...local(-2,-1,65+bob*.18),10,6,'#272431');ellipse(...local(-7,0,61),4,7,'#322936');if(a.name==='NOVA'){ellipse(...local(5,-2,67),5,4,'#423141');line(local(-8,1,61),local(-10,1,57),'#71d7e6',2)}else{line(local(-9,1,55),local(9,1,54),a.color,3);line(local(7,1,44),local(10,1,40),'#b8acb7',1)}
+text(a.name+(a.staff?' / LAB':a.graduated?' / GRADUATE':''),a.x,a.y+25,0,a.staff?'#f5dce0':a.graduated?'#8cf0b7':a.color,11);if(a.studyRequested&&!a.path.length){text('STUDY '+Math.min(100,Math.floor((a.studyTime||0)/12*100))+'%',a.x,a.y,90,'#a0f1d4',11)}
+}
+function update(a,dt){a.motionTime=(a.motionTime||0)+dt;a.completedFor=Math.max(0,(a.completedFor||0)-dt);if(a.studyRequested&&!a.path.length&&!a.transit){const desk=a.name==='NOVA'?-240:240;if(Math.hypot(a.x-desk,a.y-1060)<3&&!a.graduated){a.speed=0;a.angle=Math.PI;a.studyTime=(a.studyTime||0)+dt;const stage=['Reading','Practicing','Reviewing'][Math.min(2,Math.floor(a.studyTime/4))];if(agents[selected]===a)status.textContent=a.name+' · '+stage+' · '+Math.min(100,Math.floor(a.studyTime/12*100))+'%';if(a.studyTime>=12){a.graduated=true;a.studyRequested=false;a.completedFor=3;a.completedKind="Graduated";status.textContent=a.name+' graduated! Exit portal unlocked.'}return}}if(a.transit){const tr=a.transit;tr.elapsed+=dt;if(tr.elapsed>=1&&!tr.arrived){a.x=tr.target[0];a.y=tr.target[1];tr.arrived=true;}if(tr.elapsed>=1.9){a.transit=null;a.path.shift();if(agents[selected]===a)status.textContent=a.name+' · portal transfer complete';}return}if(a.path.length&&a.path[0][2]){a.speed=0;a.transit={elapsed:0,source:[a.x,a.y],target:a.path[0],arrived:false};if(agents[selected]===a)status.textContent=a.name+' · entering portal';return}if(!a.path.length){a.speed=0;return}const [x,y]=a.path[0],dx=x-a.x,dy=y-a.y,d=Math.hypot(dx,dy);if(d<1){a.path.shift();if(!a.path.length)a.speed=0;return}const wanted=Math.atan2(dx,dy);let delta=Math.atan2(Math.sin(wanted-a.angle),Math.cos(wanted-a.angle));a.angle+=Math.sign(delta)*Math.min(Math.abs(delta),dt*8);if(Math.abs(delta)>.35){a.speed=0;return}const run=a.pace==='run'||((a.pace||'auto')==='auto'&&(d>150||(a.speed>85&&d>55)));const cap=run?132:68;const target=Math.min(cap,Math.max(26,Math.sqrt(2*260*d)));a.speed+=Math.sign(target-a.speed)*Math.min(Math.abs(target-a.speed),dt*260);const step=Math.min(d,a.speed*dt);a.x+=dx/d*step;a.y+=dy/d*step;a.phase+=step/48*Math.PI*2;}
+function frame(t){const dt=Math.min(.04,(t-last)/1000||0);last=t;if(!paused)agents.forEach(a=>{update(a,dt);life(a,dt)});cameraStep(Math.max(.016,dt));scene();speechBubbles();dashboardTime+=dt;if(dashboardTime>.2){updateDashboard();dashboardTime=0}requestAnimationFrame(frame)}
+root.querySelectorAll('[data-agent]').forEach(b=>b.onclick=()=>{selected=+b.dataset.agent;root.querySelectorAll('[data-agent]').forEach(n=>n.setAttribute('aria-pressed',n===b));status.textContent=agents[selected].name+' selected · choose Ask selected agent'});
+function walkable(x,y){const outline=y<300?roomShapes.hq:y<850?roomShapes.war:y<1400?roomShapes.research:roomShapes.lab;if(!insideRoom(x,y,outline,18))return false;if(Math.abs(x)<=310&&y>=1520&&y<=1860)return !(Math.abs(x)>150&&y<1600)&&!(Math.abs(x)<115&&y>1600&&y<1780);if(Math.abs(x)<=310&&y>=960&&y<=1280)return !(Math.abs(x)>155&&y<1040)&&!(Math.abs(x)>125&&y>1080&&y<1200);return (x>=-310&&x<=310&&y>=-20&&y<=210)||(Math.abs(x)<=310&&y>=400&&y<=730&&!(Math.abs(x)<140&&y>465&&y<630)&&!(Math.abs(x)>150&&y<480))}
+function route(a,x,y){if(a.transit)return false;if(a.y>=920&&a.y<=1310&&!(y>=920&&y<=1310)&&!a.graduated){status.textContent=a.name+' must graduate first. Choose Study at desk.';return false;}const start=[Math.round(a.x/20),Math.round(a.y/20)],end=[Math.round(x/20),Math.round(y/20)],key=q=>q.join(',');if(!walkable(end[0]*20,end[1]*20))return false;const queue=[start],seen=new Map([[key(start),null]]);let found=false;for(let i=0;i<queue.length;i++){const q=queue[i];if(key(q)===key(end)){found=true;break}const neighbors=[[q[0]+1,q[1]],[q[0]-1,q[1]],[q[0],q[1]+1],[q[0],q[1]-1]];if(q[0]===0&&[10,20,48,76].includes(q[1]))for(const gate of [10,20,48,76])if(gate!==q[1]&&(q[1]!==48||a.graduated))neighbors.push([0,gate]);for(const n of neighbors){const k=key(n);if(!seen.has(k)&&walkable(n[0]*20,n[1]*20)){seen.set(k,q);queue.push(n)}}}if(!found)return false;let path=[],q=end;while(q){path.push([q[0]*20,q[1]*20]);q=seen.get(key(q))}path.reverse();for(let i=1;i<path.length;i++){if(Math.abs(path[i][1]-path[i-1][1])>20)path[i][2]=true}a.studyRequested=false;a.path=path.filter((q,i)=>i===0||i===path.length-1||q[2]||path[i+1][2]||(q[0]-path[i-1][0]!==path[i+1][0]-q[0])||(q[1]-path[i-1][1]!==path[i+1][1]-q[1]));return true}
+root.querySelector('#walk').textContent='Visit War Room';
+root.querySelector('#walk').onclick=()=>{const a=agents[selected];if(route(a,a.name==='NOVA'?-180:180,660)){paused=false;root.querySelector('#pause').textContent='Pause';status.textContent=a.name+' · portal to War Room'}};
+root.querySelector('#pause').onclick=e=>{paused=!paused;e.target.textContent=paused?'Resume':'Pause'};
+root.querySelector('#zoom').onclick=e=>{close=!close;e.target.setAttribute('aria-pressed',close);resize()};
+canvas.onpointerdown=e=>{const b=canvas.getBoundingClientRect(),x=(e.clientX-b.left-W/2)/S,y=510+(e.clientY-b.top-H*.5)/(S*.65);if(route(agents[selected],x,y))status.textContent=agents[selected].name+' · '+(y>=920?'Research Facility':y>380?'War Room':'Headquarters')};
+const researchButton=document.createElement('button');researchButton.textContent='Visit Research';root.querySelector('#walk').after(researchButton);researchButton.onclick=()=>{if(route(agents[selected],0,1240)){status.textContent=agents[selected].name+' · portal to Research';paused=false;root.querySelector('#pause').textContent='Pause'}};const hqButton=document.createElement('button');hqButton.textContent='Return to HQ';researchButton.after(hqButton);hqButton.onclick=()=>{if(route(agents[selected],120,80)){status.textContent=agents[selected].name+' · returning to HQ';paused=false;root.querySelector('#pause').textContent='Pause'}};const studyButton=document.createElement('button');studyButton.textContent='Study at desk';researchButton.after(studyButton);studyButton.onclick=()=>{const a=agents[selected];if(a.graduated){status.textContent=a.name+' has already graduated. Exit unlocked.';return}if(route(a,a.name==='NOVA'?-240:240,1060)){a.studyRequested=true;paused=false;root.querySelector('#pause').textContent='Pause';status.textContent=a.name+' · heading to study desk (12-second demo)'}};let autonomous=true,chatAgent=null;
+const dialog=root.querySelector('#agent-dialog'),thread=root.querySelector('#conversation'),input=root.querySelector('#agent-question');
+agents.forEach((a,i)=>{a.thoughtWait=2+i*3;a.messages=[];a.taskLabel='Observing the station';a.visits=0;a.workTime=0;a.tasksDone=0;a.bubbleTime=0;});
+function say(a,message){a.bubble=message;a.bubbleTime=8;a.messages.push({role:'agent',text:message});if(a.messages.length>40)a.messages.shift();if(chatAgent===a&&dialog.open)renderConversation();}
+function renderConversation(){thread.replaceChildren();for(const m of chatAgent.messages){const row=document.createElement('div');row.className='message '+(m.role==='user'?'user':'');row.textContent=(m.role==='user'?'You: ':chatAgent.name+': ')+m.text;thread.append(row)}thread.scrollTop=thread.scrollHeight;}
+function openChat(index){chatAgent=agents[index];root.querySelector('#dialog-name').textContent='Ask '+chatAgent.name;renderConversation();if(!dialog.open)dialog.showModal();input.focus();}
+function answer(a,question){
+ const q=question.toLowerCase();if(/mission|instruction|assignment/.test(q)){const job=a.activeAbility||a.pendingAbility;return job&&job.groupId?'Crew brief: '+job.brief+' My assigned demo action: '+job.name+'.':'I have no crew mission assigned.';}
+ if(a.staff&&/who|role|personality/.test(q))return 'I’m '+a.name+', the '+a.role.toLowerCase()+'. '+(a.name==='MIRA'?'I prepare samples and review experiment results.':'I calibrate instruments and inspect equipment.');
+ if(a.staff&&/next|plan/.test(q))return 'I rotate between my sample bench, chamber checks and recording results in the Laboratory.';
+ if(/laboratory|experiment|sample|lab\b/.test(q))return 'The Laboratory tests what we learn in Research. I calibrate equipment, test samples and review results. These are simulated experiments.';
+ if(/graduat|course|study|learn/.test(q))return a.graduated?'I graduated from the demo course. My Research exit is unlocked.':'I need to complete Reading, Practice and Review at my study desk. Until then, I cannot leave Research.';
+ if(/next|plan/.test(q))return !a.graduated?'My priority is to finish the study course, then choose a work station.':a.name==='JEVA'?'I investigate samples in the Laboratory, compare research notes and report findings at HQ.':'I coordinate at HQ, plan in the War Room and validate experiments in the Laboratory.';
+ if(/why/.test(q))return 'I chose this routine based on my role and graduation status. Current goal: '+a.taskLabel.toLowerCase()+'. These are local simulation rules.';
+ if(/who|role|personality/.test(q))return a.name==='JEVA'?'I’m Jeva, Nova’s curious assistant. I investigate questions and report findings.':'I’m Nova, the founder. I coordinate the team and review priorities.';
+ if(/doing|working|status|where|progress/.test(q))return 'I’m '+a.taskLabel.toLowerCase()+'. '+(a.transit?'I’m inside a portal transfer.':a.path.length?'I’m walking to my station.':a.workTime>0?'My demo work session is in progress.':'')+' I have finished '+a.tasksDone+' simulated work sessions.';
+ if(/hello|hey|hi\b/.test(q))return 'Hi! You can check in while I continue my routine.';
+ return 'I can report my current activity, next step, role and graduation status in this demo. Answering that question freely needs a connected AI model.';
+}
+function ask(question){const q=question.trim();if(!q||!chatAgent)return;chatAgent.messages.push({role:'user',text:q});say(chatAgent,answer(chatAgent,q));input.value='';renderConversation();}
+root.querySelector('#question-form').onsubmit=e=>{e.preventDefault();ask(input.value)};
+root.querySelector('#ask-status').onclick=()=>ask('What are you doing?');
+root.querySelector('#close-dialog').onclick=()=>dialog.close();
+dialog.addEventListener('close',()=>{root.querySelector('#talk-agent').focus()});
+const talk=document.createElement('button');talk.id='talk-agent';talk.textContent='Talk to agent';root.querySelector('#conversation-action').append(talk);talk.onclick=()=>openChat(selected);
+const autoButton=document.createElement('button');autoButton.textContent='Autonomy: on';autoButton.setAttribute('aria-pressed','true');root.querySelector('#pause').before(autoButton);autoButton.onclick=()=>{autonomous=!autonomous;autoButton.textContent='Autonomy: '+(autonomous?'on':'off');autoButton.setAttribute('aria-pressed',autonomous);status.textContent=autonomous?'Agents choose their next routines.':'Current activities finish; new routines are on hold.'};
+function life(a,dt){
+ a.bubbleTime=Math.max(0,a.bubbleTime-dt);
+ if(a.transit||a.path.length||a.studyRequested)return;
+ if(a.wasStudying){a.wasStudying=false;a.taskLabel='Graduated';say(a,'I graduated! My exit portal is unlocked.');a.thoughtWait=3;}
+ if(a.workTime>0){a.workTime=Math.max(0,a.workTime-dt);a.workPhase=(a.workPhase||0)+dt;a.angle=a.y>=1460&&a.y>1640&&a.y<1780?(a.x<0?Math.PI/2:-Math.PI/2):Math.PI;if(a.workTime===0){a.completedFor=3;a.completedKind="Task complete";a.tasksDone++;a.taskLabel='Reviewing my next step';if(!a.activeAbility)say(a,a.y>=1460?'Simulated experiment complete: calibration, sample test and review finished.':'Demo session complete. I’m choosing my next task.');if(a.activeAbility){finishGroup(a,a.activeAbility);a.lastResult=a.activeAbility.result;say(a,a.lastResult);if(agents[selected]===a)root.querySelector('#ability-result').textContent=a.lastResult;a.activeAbility=null;}a.thoughtWait=4}return;}
+ if(a.arrivalTask){a.taskLabel=a.arrivalTask;if(a.y>=1460)a.labVisited=true;a.arrivalTask=null;a.workTime=8;a.workPhase=0;say(a,a.taskLabel+'. I’ll check in when finished.');return;}
+ if(startAbility(a))return;
+ if(!autonomous&&!a.pendingAbility)return;
+ a.thoughtWait-=dt;if(a.thoughtWait>0)return;
+ if(!a.graduated){if(route(a,a.name==='NOVA'?-240:240,1060)){a.studyRequested=true;a.wasStudying=true;a.taskLabel='Studying for graduation';say(a,a.name==='JEVA'?'I’m curious what the Research course covers. Heading to my desk.':'I’ll complete my training before taking on station work.')}else a.thoughtWait=2;return;}
+ const jobs=a.staff?(a.name==='MIRA'?[['Preparing laboratory samples',-240,1600],['Inspecting sample reactions',-140,1720],['Recording experiment results',-240,1820]]:[['Calibrating laboratory instruments',240,1600],['Checking chamber sensors',140,1720],['Recording equipment checks',240,1820]]):a.name==='JEVA'?[['Testing laboratory samples',-180,1700],['Comparing research notes',0,1140],['Reviewing findings',180,660],['Reporting at Headquarters',120,0]]:[['Validating laboratory experiments',180,1700],['Coordinating station priorities',-120,0],['Planning in the War Room',-180,660],['Reviewing research',0,1240]];
+ // Prefer the character's home role, while avoiding the last destination.
+ const choices=jobs.filter(j=>j[0]!==a.lastJob),job=!a.labVisited?jobs[0]:choices[Math.floor(Math.random()*choices.length)];
+ if(route(a,job[1],job[2])){a.lastJob=job[0];a.arrivalTask=job[0];a.taskLabel='Heading to '+job[0].toLowerCase();say(a,'I’ll '+job[0].toLowerCase()+'.')}else a.thoughtWait=2;
+}
+function speechBubbles(){
+ const boxes=[];for(const a of agents){if(agents[selected]!==a||!a.bubble||a.bubbleTime<=0||a.transit)continue;ctx.save();ctx.font='12px system-ui';const maxWidth=Math.min(245,W-32),words=a.bubble.split(' '),lines=[];let current='';for(const word of words){const next=current?current+' '+word:word;if(ctx.measureText(next).width>maxWidth-24&&current){lines.push(current);current=word}else current=next}if(current)lines.push(current);const visible=lines.slice(0,5);if(lines.length>5)visible[4]+='…';const h=visible.length*16+16,q=p(a.x,a.y,150);if(q[1]<0||q[1]>H){ctx.restore();continue}let x=Math.max(8,Math.min(W-maxWidth-8,q[0]-maxWidth/2)),y=Math.max(8,q[1]-h);for(const b of boxes){if(x<b.x+b.w&&x+maxWidth>b.x&&y<b.y+b.h&&y+h>b.y)y=b.y+b.h+8}boxes.push({x,y,w:maxWidth,h});ctx.fillStyle='#17273a';ctx.strokeStyle=a.color;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(x,y,maxWidth,h,9);ctx.fill();ctx.stroke();ctx.fillStyle='#e8f3fb';ctx.textAlign='left';visible.forEach((l,i)=>ctx.fillText(l,x+12,y+20+i*16));ctx.beginPath();ctx.moveTo(Math.max(x+10,Math.min(x+maxWidth-10,q[0])),y+h);ctx.lineTo(q[0],q[1]+5);ctx.stroke();ctx.restore();}
+}
+// The simulation runs continuously; selecting an agent opens their conversation.
+canvas.onpointerdown=e=>{const b=canvas.getBoundingClientRect(),x=e.clientX-b.left,y=e.clientY-b.top;let best=-1,distance=32;agents.forEach((a,i)=>{const q=p(a.x,a.y,35),d=Math.hypot(q[0]-x,q[1]-y);if(d<distance){best=i;distance=d}});if(best>=0){chooseAgent(best);root.querySelectorAll('[data-agent]').forEach(n=>n.setAttribute('aria-pressed',+n.dataset.agent===selected));openChat(best)}};
+say(agents[0],'I’m checking our priorities. You can ask me a question anytime.');
+say(agents[1],'I want to explore the Research Facility.');
+say(agents[2],'I’m Mira. Preparing our next sample.');
+agents[2].arrivalTask='Preparing laboratory samples';agents[3].arrivalTask='Calibrating laboratory instruments';
+
+root.querySelector('#room-view').onchange=e=>{view=e.target.value;resize()};
+const cards=Array.from(root.querySelectorAll('.crew-card'));
+const selectedName=root.querySelector('#selected-name'), selectedTask=root.querySelector('#selected-task');
+function roomOf(a){return a.y<300?'Headquarters':a.y<850?'War Room':a.y<1400?'Research':'Laboratory'}
+function stateOf(a){return paused?'Paused':a.transit?'In portal':a.path.length?(a.speed>85?'Running':a.speed>.5?'Walking':'Turning'):a.completedFor>0?(a.completedKind||'Complete'):a.studyRequested?'Studying':a.workTime>0?'Working':autonomous?'Planning':'Idle'}
+function updateDashboard(){refreshAbilities();renderGroup();
+ cards.forEach((card,i)=>{const a=agents[i],state=stateOf(a);card.setAttribute('aria-pressed',i===selected);card.querySelector('.agent-state').textContent=state;card.querySelector('.agent-room').textContent=roomOf(a);const task=a.completedFor>0?(a.completedKind||'Task complete'):a.studyRequested&&!a.path.length?'Study course · '+Math.min(100,Math.floor((a.studyTime||0)/12*100))+'%':a.taskLabel;card.querySelector('.agent-task').textContent=task;card.setAttribute('aria-label',a.name+', '+state+', '+roomOf(a)+'. '+task+'. Follow agent');});
+ const a=agents[selected];selectedName.textContent=a.name+' · '+(paused?'Paused':activityOf(a));selectedTask.textContent=roomOf(a)+' · '+a.tasksDone+' demo sessions completed';
+}
+function chooseAgent(index){selected=index;view='follow';root.querySelector('#room-view').value='follow';resize();updateDashboard();status.textContent='Following '+agents[index].name+' · '+agents[index].taskLabel;}
+cards.forEach((card,i)=>card.onclick=()=>chooseAgent(i));
+const full=root.querySelector('#expand-view');
+full.onclick=async()=>{
+ if(document.fullscreenElement===root){await document.exitFullscreen();return}
+ if(root.classList.contains('expanded')){root.classList.remove('expanded');full.textContent='Full screen';resize();return}
+ try{if(!root.requestFullscreen)throw new Error('unsupported');await root.requestFullscreen();}
+ catch(_){root.classList.add('expanded');full.textContent='Exit expanded view';status.textContent='Expanded view · use the preview’s expand control for a wider view.';resize();}
+};
+document.addEventListener('fullscreenchange',()=>{full.textContent=document.fullscreenElement===root?'Exit full screen':'Full screen';resize()});
+const abilitySets={
+ NOVA:[{name:'Prepare briefing',x:-180,y:660,result:'Demo briefing prepared: current priorities and next actions.'},{name:'Review station',x:-120,y:0,result:'Demo station review recorded for the crew.'}],
+ JEVA:[{name:'Research a question',x:0,y:1140,result:'Demo research notes collected and ready for review.'},{name:'Compare findings',x:180,y:660,result:'Demo comparison finished: findings organized for Nova.'}],
+ MIRA:[{name:'Analyze sample',x:-140,y:1720,result:'Demo sample analysis recorded.'},{name:'Prepare samples',x:-240,y:1600,result:'Demo sample set prepared for testing.'}],
+ REN:[{name:'Calibrate instruments',x:240,y:1600,result:'Demo calibration completed.'},{name:'Inspect chamber',x:140,y:1720,result:'Demo equipment inspection recorded.'}]
+};
+let abilityAgent=-1;
+function refreshAbilities(){if(abilityAgent===selected)return;abilityAgent=selected;const a=agents[selected],picker=root.querySelector('#agent-ability');picker.replaceChildren();abilitySets[a.name].forEach((skill,i)=>{const opt=document.createElement('option');opt.value=String(i);opt.textContent=skill.name;picker.append(opt)});picker.value='0';root.querySelector('#agent-pace').value=a.pace||'auto';root.querySelector('#ability-result').textContent=a.lastResult||'Simulated abilities · finish current activity first';}
+root.querySelector('#agent-pace').onchange=e=>{agents[selected].pace=e.target.value;status.textContent=agents[selected].name+' pace: '+e.target.value;};
+root.querySelector('#use-ability').onclick=()=>{const a=agents[selected],skill=abilitySets[a.name][Number(root.querySelector('#agent-ability').value)];if(!skill)return;if(a.pendingAbility||a.activeAbility){root.querySelector('#ability-result').textContent='An ability is already queued or running.';return}a.pendingAbility=skill;root.querySelector('#ability-result').textContent='Queued: '+skill.name+(!a.graduated?' · training comes first':' · after current activity');say(a,'Queued '+skill.name.toLowerCase()+'. I’ll finish my current activity first.');};
+function startAbility(a){if(!a.pendingAbility||!a.graduated)return false;const skill=a.pendingAbility;if(!route(a,skill.x,skill.y)){a.thoughtWait=2;return true}a.activeAbility=skill;a.pendingAbility=null;a.arrivalTask=skill.name;a.taskLabel='Heading to '+skill.name.toLowerCase();a.completedFor=0;say(a,'Starting '+skill.name.toLowerCase()+'.');return true;}
+refreshAbilities();
+
+let groupMission=null,missionCounter=0;
+const groupFeedback=root.querySelector('#group-feedback'),groupList=root.querySelector('#group-assignments');
+function renderGroup(){
+ if(!groupMission)return;
+ const count=groupMission.done.size;
+ root.querySelector('#cancel-mission').disabled=count===4||groupMission.cancelled;root.querySelector('#mission-summary').textContent=(groupMission.cancelled?'Mission cancelled':count===4?'Simulation complete':paused?'Mission paused':'Mission active')+' · '+count+'/4 assignments finished · '+groupMission.brief;
+ groupMission.rows.forEach((row,i)=>{const a=agents[i],job=groupMission.jobs[i];const stage=groupMission.done.has(a.name)?'Complete':groupMission.cancelled?'Cancelled':a.activeAbility&&a.activeAbility.groupId===groupMission.id?(a.path.length||a.transit?'Travelling':'Working'):!a.graduated?'Waiting for training':a.pendingAbility&&a.pendingAbility.groupId===groupMission.id?'Queued':'Waiting';row.textContent=a.name+' · '+job.name+' · '+stage;});
+}
+function finishGroup(a,skill){if(groupMission&&skill.groupId===groupMission.id){groupMission.done.add(a.name);renderGroup()}}
+root.querySelector('#group-command').onsubmit=e=>{
+ e.preventDefault();const input=root.querySelector('#crew-instruction'),brief=input.value.trim();if(!brief){groupFeedback.textContent='Enter an instruction for the crew.';return}
+ if(groupMission&&!groupMission.cancelled&&groupMission.done.size<4){groupFeedback.textContent='A crew mission is already running. Finish it before sending another.';return}
+ if(agents.some(a=>a.pendingAbility||a.activeAbility)){groupFeedback.textContent='An agent already has an ability queued or running. Wait for it to finish; no assignments were replaced.';return}
+ let kind=root.querySelector('#group-template').value;
+ if(kind==='auto'){const matches=[[/research|study|investigat|learn/i,'research'],[/sample|lab|test|calibrat|experiment|inspect/i,'lab'],[/brief|meeting|strategy|plan/i,'brief']].filter(([pattern])=>pattern.test(brief));if(matches.length>1){groupFeedback.textContent='This instruction covers several mission types. Select the preset you want to run first; your text stays here.';return}kind=matches.length?matches[0][1]:null;}
+ if(!kind){groupFeedback.textContent='I cannot interpret that instruction in this demo. Choose Research mission, Laboratory test or Team briefing to use it as the mission brief.';return}
+ const jobs=agents.map((a,i)=>{let skill={...abilitySets[a.name][0]};if(kind==='research'&&i===0)skill={...abilitySets.NOVA[1]};if(kind==='lab'&&i===1)skill={name:'Review laboratory observations',x:180,y:1820,result:'Demo laboratory observations recorded.'};if(kind==='brief'){const points=[[-180,660],[180,660],[-180,480],[180,480]];skill={name:['Lead team briefing','Present findings','Report sample results','Report equipment status'][i],x:points[i][0],y:points[i][1],result:'Demo briefing contribution recorded for '+a.name+'.'}}return {...skill,brief,groupId:missionCounter+1}});
+ groupList.replaceChildren();groupMission={id:++missionCounter,brief,kind,jobs,done:new Set(),rows:jobs.map(()=>{const row=document.createElement('li');groupList.append(row);return row})};
+ agents.forEach((a,i)=>{a.pendingAbility=jobs[i];say(a,'Crew mission received. My assignment: '+jobs[i].name.toLowerCase()+'.')});
+ renderGroup();groupFeedback.textContent='Assignments queued. Current activities finish first.';input.value='';
+};
+
+
+root.querySelector('#cancel-mission').onclick=()=>{
+ if(!groupMission||groupMission.cancelled||groupMission.done.size===4)return;
+ groupMission.cancelled=true;
+ for(const a of agents){
+  if(a.pendingAbility&&a.pendingAbility.groupId===groupMission.id)a.pendingAbility=null;
+  if(a.activeAbility&&a.activeAbility.groupId===groupMission.id){a.activeAbility=null;a.arrivalTask=null;a.workTime=0;if(a.transit){a.path=a.path.slice(0,1)}else{a.path=[];a.speed=0}a.taskLabel='Mission cancelled';a.thoughtWait=3;say(a,'Mission cancelled. No completion recorded.');}
+ }
+ groupFeedback.textContent='Cancelled unfinished assignments. Existing completed results remain visible.';renderGroup();
+};
+updateDashboard();
+
+root.querySelector('#walk').hidden=true;researchButton.hidden=true;hqButton.hidden=true;studyButton.hidden=true;status.textContent='Autonomous demo running · tap an agent to talk';resize();requestAnimationFrame(frame);
+})();
+</script>
+</div>
+
+</body></html>
